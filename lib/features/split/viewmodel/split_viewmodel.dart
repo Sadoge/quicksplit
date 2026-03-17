@@ -154,22 +154,23 @@ class SplitViewmodel extends Notifier<SplitState> {
     state = build();
   }
 
-  String buildShareText() {
+  String buildShareText(String currencySymbol) {
     final r = state.result;
     if (r == null) return '';
 
+    final s = currencySymbol;
     final buffer = StringBuffer();
     buffer.writeln('✂️ QuickSplit');
     buffer.writeln();
     buffer.writeln(
-      'Bill \$${r.billTotal.toStringAsFixed(2)} + '
+      'Bill $s${r.billTotal.toStringAsFixed(2)} + '
       '${r.tipPercent.toStringAsFixed(0)}% tip = '
-      '\$${r.total.toStringAsFixed(2)}',
+      '$s${r.total.toStringAsFixed(2)}',
     );
     buffer.writeln();
 
     for (final pr in r.personResults) {
-      buffer.writeln('${pr.person.name} → \$${pr.owes.toStringAsFixed(2)}');
+      buffer.writeln('${pr.person.name} → $s${pr.owes.toStringAsFixed(2)}');
     }
 
     return buffer.toString();

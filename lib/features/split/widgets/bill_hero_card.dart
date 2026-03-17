@@ -6,6 +6,7 @@ import '../../../core/design_system/app_colors.dart';
 import '../../../core/design_system/app_radius.dart';
 import '../../../core/design_system/app_spacing.dart';
 import '../../../core/design_system/app_typography.dart';
+import '../viewmodel/currency_viewmodel.dart';
 import '../viewmodel/split_viewmodel.dart';
 
 class BillHeroCard extends ConsumerStatefulWidget {
@@ -35,6 +36,7 @@ class _BillHeroCardState extends ConsumerState<BillHeroCard> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(splitViewmodelProvider);
+    final currency = ref.watch(currencyProvider).value ?? Currency.usd;
     final peopleCount = state.people.length;
     final tipPercent = state.tipPercent;
 
@@ -88,7 +90,7 @@ class _BillHeroCardState extends ConsumerState<BillHeroCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '\$',
+                      currency.symbol,
                       style: AppTypography.monoLarge.copyWith(
                         color: AppColors.white.withValues(alpha: 0.5),
                         fontSize: 28,

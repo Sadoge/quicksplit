@@ -8,6 +8,7 @@ import '../../../core/design_system/app_spacing.dart';
 import '../../../core/design_system/app_typography.dart';
 import '../viewmodel/split_viewmodel.dart';
 import '../widgets/bill_hero_card.dart';
+import '../widgets/currency_selector.dart';
 import '../widgets/mode_toggle.dart';
 import '../widgets/tip_selector_card.dart';
 import '../widgets/people_card.dart';
@@ -39,6 +40,8 @@ class SplitScreen extends ConsumerWidget {
                   const _Header(),
                   const SizedBox(height: AppSpacing.md),
                   const BillHeroCard(),
+                  const SizedBox(height: AppSpacing.md),
+                  const CurrencySelector(),
                   const SizedBox(height: AppSpacing.md),
                   const ModeToggle(),
                   const SizedBox(height: AppSpacing.md),

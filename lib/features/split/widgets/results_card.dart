@@ -6,6 +6,7 @@ import '../../../core/design_system/app_radius.dart';
 import '../../../core/design_system/app_spacing.dart';
 import '../../../core/design_system/app_typography.dart';
 import '../model/split_result.dart';
+import '../viewmodel/currency_viewmodel.dart';
 import '../viewmodel/split_viewmodel.dart';
 
 class ResultsCard extends ConsumerWidget {
@@ -14,6 +15,7 @@ class ResultsCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(splitViewmodelProvider.select((s) => s.result));
+    final sym = ref.watch(currencyProvider).value?.symbol ?? '\$';
     if (result == null) return const SizedBox.shrink();
 
     return Column(
@@ -43,8 +45,8 @@ class ResultsCard extends ConsumerWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Text(
                   result.unassignedAmount! > 0
-                      ? '\$${result.unassignedAmount!.toStringAsFixed(2)} unassigned'
-                      : '\$${result.unassignedAmount!.abs().toStringAsFixed(2)} over-assigned',
+                      ? '$sym${result.unassignedAmount!.toStringAsFixed(2)} unassigned'
+                      : '$sym${result.unassignedAmount!.abs().toStringAsFixed(2)} over-assigned',
                   style: AppTypography.labelLarge.copyWith(
                     color: AppColors.accentOrange,
                   ),
@@ -85,7 +87,7 @@ class ResultsCard extends ConsumerWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '\$${result.total.toStringAsFixed(2)}',
+                      '$sym${result.total.toStringAsFixed(2)}',
                       style: AppTypography.mono.copyWith(
                         color: AppColors.white,
                       ),
@@ -104,7 +106,7 @@ class ResultsCard extends ConsumerWidget {
                         thickness: 1,
                         color: AppColors.border,
                       ),
-                    _ResultRow(personResult: pr),
+                    _ResultRow(personResult: pr, currencySymbol: sym),
                   ],
                 );
               }),
@@ -119,7 +121,7 @@ class ResultsCard extends ConsumerWidget {
                   children: [
                     _SummaryCell(
                       label: 'Subtotal',
-                      value: '\$${result.billTotal.toStringAsFixed(2)}',
+                      value: '$sym${result.billTotal.toStringAsFixed(2)}',
                     ),
                     Container(
                       width: 1,
@@ -128,7 +130,7 @@ class ResultsCard extends ConsumerWidget {
                     ),
                     _SummaryCell(
                       label: 'Tip ${result.tipPercent.toStringAsFixed(0)}%',
-                      value: '\$${result.tip.toStringAsFixed(2)}',
+                      value: '$sym${result.tip.toStringAsFixed(2)}',
                     ),
                     Container(
                       width: 1,
@@ -137,7 +139,7 @@ class ResultsCard extends ConsumerWidget {
                     ),
                     _SummaryCell(
                       label: 'Total',
-                      value: '\$${result.total.toStringAsFixed(2)}',
+                      value: '$sym${result.total.toStringAsFixed(2)}',
                       bold: true,
                     ),
                   ],
@@ -153,7 +155,8 @@ class ResultsCard extends ConsumerWidget {
 
 class _ResultRow extends StatelessWidget {
   final PersonResult personResult;
-  const _ResultRow({required this.personResult});
+  final String currencySymbol;
+  const _ResultRow({required this.personResult, required this.currencySymbol});
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +200,7 @@ class _ResultRow extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$${personResult.subtotal.toStringAsFixed(2)} + \$${personResult.tipShare.toStringAsFixed(2)} tip',
+                  '$currencySymbol${personResult.subtotal.toStringAsFixed(2)} + $currencySymbol${personResult.tipShare.toStringAsFixed(2)} tip',
                   style: AppTypography.labelSmall.copyWith(
                     color: AppColors.text3,
                     letterSpacing: 0,
@@ -207,7 +210,7 @@ class _ResultRow extends StatelessWidget {
             ),
           ),
           Text(
-            '\$${personResult.owes.toStringAsFixed(2)}',
+            '$currencySymbol${personResult.owes.toStringAsFixed(2)}',
             style: AppTypography.monoLarge.copyWith(
               color: AppColors.text,
             ),

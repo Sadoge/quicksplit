@@ -7,6 +7,7 @@ import '../../../core/design_system/app_colors.dart';
 import '../../../core/design_system/app_radius.dart';
 import '../../../core/design_system/app_spacing.dart';
 import '../../../core/design_system/app_typography.dart';
+import '../viewmodel/currency_viewmodel.dart';
 import '../viewmodel/split_viewmodel.dart';
 
 class ShareButton extends ConsumerWidget {
@@ -46,9 +47,10 @@ class ShareButton extends ConsumerWidget {
           onPressed: hasResult
               ? () {
                   HapticFeedback.mediumImpact();
+                  final sym = ref.read(currencyProvider).value?.symbol ?? '\$';
                   final text = ref
                       .read(splitViewmodelProvider.notifier)
-                      .buildShareText();
+                      .buildShareText(sym);
                   SharePlus.instance.share(ShareParams(text: text));
                 }
               : null,

@@ -7,6 +7,7 @@ import '../../../core/design_system/app_radius.dart';
 import '../../../core/design_system/app_spacing.dart';
 import '../../../core/design_system/app_typography.dart';
 import '../model/person.dart';
+import '../viewmodel/currency_viewmodel.dart';
 import '../viewmodel/split_viewmodel.dart';
 
 class PersonRow extends ConsumerStatefulWidget {
@@ -73,6 +74,7 @@ class _PersonRowState extends ConsumerState<PersonRow>
 
   @override
   Widget build(BuildContext context) {
+    final currency = ref.watch(currencyProvider).value ?? Currency.usd;
     final initial =
         widget.person.name.isNotEmpty ? widget.person.name[0].toUpperCase() : '?';
 
@@ -142,7 +144,7 @@ class _PersonRowState extends ConsumerState<PersonRow>
                   child: Row(
                     children: [
                       Text(
-                        '\$',
+                        currency.symbol,
                         style: AppTypography.mono.copyWith(
                           color: AppColors.text3,
                         ),
