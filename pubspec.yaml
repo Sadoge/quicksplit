@@ -1,5 +1,8 @@
 name: quicksplit
-description: "A new Flutter project."
+description: "A Flutter bill-splitting app for equal or itemized splits, tip calculation, and shareable breakdowns."
+homepage: "https://github.com/Sadoge/quicksplit"
+repository: "https://github.com/Sadoge/quicksplit"
+issue_tracker: "https://github.com/Sadoge/quicksplit/issues"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
